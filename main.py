@@ -1,8 +1,6 @@
 import tkinter as tk
 from tkinter import ttk  # Needed for separators
-
 import numpy as np
-
 
 # Global parameters
 w = 20
@@ -12,7 +10,9 @@ speed_ms = 80
 bool_array = np.zeros((w, w))
 
 
-
+#========================================================================================
+# GOL Logic
+#========================================================================================
 
 def update_cell(i, j):
     global w
@@ -49,22 +49,14 @@ root = tk.Tk()
 root.title("Game of life")
 root.geometry("600x600")
 
-
-
 main_frame = tk.Frame(root)
 main_frame.pack(fill="both", expand=True)
 
 canvas = tk.Canvas(main_frame, bg = "gray")
 canvas.pack(side = "left", fill = "both", expand = True)
 
-
 control_frame = tk.Frame(main_frame)
 control_frame.pack(side = "right", fill = "y", padx = 10, pady = 10)
-
-
-
-
-
 
 def update_labels(nb_cells, nb_step):
     label_nb_cells.config(text = f"Current non-zero values:\n{nb_cells} ({round(nb_cells / (w * w) * 100, 2)}%)")
@@ -95,13 +87,6 @@ def on_canvas_click(event):
         draw_grid()
         update_labels(bool_array.astype(int).sum(), step_count)
 
-
-
-
-
-            
-
-
 """
 0 -----> j
 |
@@ -109,8 +94,6 @@ def on_canvas_click(event):
 V
 i
 """
-
-
 
 def step():
     global PendingDeprecationWarning
@@ -124,9 +107,7 @@ def step():
             # for each cell
             grid_new[i][j] = update_cell(i, j)
 
-
     bool_array = grid_new.copy()
-
 
     step_count += 1
 
@@ -134,8 +115,6 @@ def step():
     update_labels(bool_array.astype(int).sum(), step_count)
     if running:
         root.after(speed_ms, step)
-
-
 
 #========================================================================================
 # Commands
@@ -199,7 +178,6 @@ def draw_grid(event = None):
 
 canvas.bind("<Configure>", draw_grid)
 canvas.bind("<Button-1>", on_canvas_click)
-
 
 
 #========================================================================================
@@ -295,15 +273,8 @@ label_nb_cells.pack(pady=2)
 label_step = tk.Label(sim_frame, text="Steps: 0", font=("Arial", 10))
 label_step.pack(pady=2)
 
-
-
 tk.Button(sim_frame, text="Start/stop", command=start_stop).pack(fill="x", pady=2)
 tk.Button(sim_frame, text="1Step", command=step).pack(fill="x", pady=2)
-
-
-
-
-
 
 root.lift()
 #root.attributes("-topmost", True)
